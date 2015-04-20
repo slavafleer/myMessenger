@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">myMessenger</string>
+    <string name="app_name">my Messenger</string>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -8,4 +8,8 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Login</string>
+    <string name="login_button_label">Log In</string>
+    <string name="login_signup_launcher_text">Sign Up</string>
+    <string name="title_activity_signup">Signup</string>
 </resources>
