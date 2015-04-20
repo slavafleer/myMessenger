@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.Parse;
+
 import java.util.Locale;
 
 import butterknife.ButterKnife;
@@ -41,6 +43,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // For Parse.com
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "ez4k58WR7yYFXYHWOY1cGPrrLabm39WQWJnw4KKu",
+                "YoZXkRQPcdA0oXWLqWlQs8lpN6RUnCLeUNOwBh8H");
+
         ButterKnife.inject(this);
 
         // Set up the action bar.
@@ -79,6 +88,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         // Login
         Intent intent = new Intent(this, LoginActivity.class);
+        // Clearing activities history. While backing from LoginActivity,
+        // we just would escape from the app and not return to MainActivity.
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
