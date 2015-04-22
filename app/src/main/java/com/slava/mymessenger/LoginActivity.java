@@ -5,12 +5,23 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.slava.mymessenger.alerts.CustomErrorDialogFragment;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 
 public class LoginActivity extends ActionBarActivity {
+    private static final String DIALOG_ERROR_TAG = "error_dialog";
+
+    @InjectView(R.id.loginUsernameField) EditText mUsername;
+    @InjectView(R.id.loginPasswordField) EditText mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +56,51 @@ public class LoginActivity extends ActionBarActivity {
     @OnClick(R.id.loginSignUpLauncher)
     protected void startSignupActivity() {
         Intent intent = new Intent(this, SignupActivity.class);
-        // Clearing activities history.
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     @OnClick(R.id.loginButton)
     protected void onClickLoginButton() {
+        String username = mUsername.getText().toString().trim();
+        String password = mPassword.getText().toString().trim();
 
+        final CustomErrorDialogFragment dialog = new CustomErrorDialogFragment();
+
+        if(username.isEmpty() || password.isEmpty()) {
+            // Show error dialog alert
+            dialog.setTitle(getString(R.string.error_message_title));
+            dialog.setMessage(getString(R.string.fill_in_all_fields_error_text));
+            dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
+        } else {
+            // Log in
+            ParseUser.logInInBackground(username, password, new LogInCallback() {
+                @Override
+                public void done(ParseUser parseUser, ParseException e) {
+                    if(e == null) {
+                        //Success - Start Main Activity
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        // Clearing activities history.
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        // Show the error to an user
+                        dialog.setTitle(getString(R.string.login_error_title));
+                        // e returned with lowercase first char.
+                        // Changes it to uppercase.
+                        String message = e.getMessage();
+                        dialog.setMessage(message.substring(0,1).toUpperCase()
+                                + message.substring(1) + ".");
+                        dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
+                    }
+                }
+            });
+        }
+
+    }
+
+    @OnClick(R.id.loginForgotPasswordLauncher)
+    protected void onClickForgotPassword() {
 
     }
 }

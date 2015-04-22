@@ -30,6 +30,7 @@ public class SignupActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
+        //TODO: Open keyboard automatically on username EditText
     }
 
     @Override
@@ -87,7 +88,7 @@ public class SignupActivity extends ActionBarActivity {
                 @Override
                 public void done(ParseException e) {
                     if(e == null) {
-                        //Success - Start Main Activity
+                        // Success - Start Main Activity
                         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                         // Clearing activities history.
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

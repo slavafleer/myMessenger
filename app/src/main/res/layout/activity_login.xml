@@ -22,7 +22,8 @@
         android:id="@+id/loginPasswordField"
         android:layout_below="@+id/loginUsernameField"
         android:layout_centerHorizontal="true"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:password="true"/>
 
     <Button
         android:layout_width="match_parent"
@@ -40,6 +41,16 @@
         android:layout_below="@+id/loginButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:textSize="18sp"/>
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:id="@+id/loginForgotPasswordLauncher"
+        android:layout_below="@+id/loginButton"
+        android:layout_alignRight="@+id/loginButton"
+        android:layout_alignEnd="@+id/loginButton"
+        android:layout_marginTop="5dp"/>
 
 </RelativeLayout>

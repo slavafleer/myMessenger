@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.parse.Parse;
+import com.parse.ParseUser;
+import com.slava.mymessenger.alerts.ShowToast;
 
 import java.util.Locale;
 
@@ -52,6 +54,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         ButterKnife.inject(this);
 
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null) {
+            navigateToLogin();
+        } else {
+            ShowToast.showToast(this, getString(R.string.welcome_text)
+                    + currentUser.getUsername() + ".");
+        }
+
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -85,7 +95,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+    }
 
+    private void navigateToLogin() {
         // Login
         Intent intent = new Intent(this, LoginActivity.class);
         // Clearing activities history. While backing from LoginActivity,
@@ -111,8 +123,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_logout) {
+            ParseUser.logOut();
+            navigateToLogin();
         }
 
         return super.onOptionsItemSelected(item);
