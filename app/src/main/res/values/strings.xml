@@ -12,4 +12,6 @@
     <string name="login_button_label">Log In</string>
     <string name="login_signup_launcher_text">Sign Up</string>
     <string name="title_activity_signup">Signup</string>
+    <string name="error_message_title">Error Message</string>
+    <string name="fill_in_all_fields_error_text">Please fill in all fields.</string>
 </resources>

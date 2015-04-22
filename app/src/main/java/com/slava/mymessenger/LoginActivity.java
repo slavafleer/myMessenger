@@ -54,6 +54,6 @@ public class LoginActivity extends ActionBarActivity {
     protected void onClickLoginButton() {
 
         GeneralErrorAlertDialogFragment dialog = new GeneralErrorAlertDialogFragment();
-        dialog.show(getFragmentManager(),"error_dialog");
+        dialog.show(getFragmentManager(),"general_error");
     }
 }
