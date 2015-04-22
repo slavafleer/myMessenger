@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         // For Parse.com
         // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
+//        Parse.enableLocalDatastore(this); // give an error while returning to main activity
         Parse.initialize(this, "ez4k58WR7yYFXYHWOY1cGPrrLabm39WQWJnw4KKu",
                 "YoZXkRQPcdA0oXWLqWlQs8lpN6RUnCLeUNOwBh8H");
 

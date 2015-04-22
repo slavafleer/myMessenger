@@ -13,7 +13,7 @@
     <string name="login_signup_launcher_text">Sign Up</string>
     <string name="title_activity_signup">Signup</string>
     <string name="error_message_title">Error Message</string>
-    <string name="fill_in_all_fields_error_text">Please fill in all fields.</string>
+    <string name="fill_in_all_fields_error_text">Please, fill in all fields.</string>
     <string name="confirm_password_hint_text">Confirm Password</string>
     <string name="password_hint_text">Password</string>
     <string name="username_hint_text">Username</string>
@@ -21,4 +21,5 @@
     <string name="signup_button_label_text">Sign Up</string>
     <string name="confirmed_password_not_matched_error_text">Confirmed Password doesn\'t match the Password.</string>
     <string name="password_error_title_text">Password Error</string>
+    <string name="signup_error_title">Signup Error</string>
 </resources>

@@ -6,8 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.slava.mymessenger.alerts.GeneralErrorAlertDialogFragment;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -47,13 +45,15 @@ public class LoginActivity extends ActionBarActivity {
     @OnClick(R.id.loginSignUpLauncher)
     protected void startSignupActivity() {
         Intent intent = new Intent(this, SignupActivity.class);
+        // Clearing activities history.
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     @OnClick(R.id.loginButton)
     protected void onClickLoginButton() {
 
-        GeneralErrorAlertDialogFragment dialog = new GeneralErrorAlertDialogFragment();
-        dialog.show(getFragmentManager(),"general_error");
+
     }
 }
