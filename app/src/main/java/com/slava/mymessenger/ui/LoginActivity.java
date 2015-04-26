@@ -1,4 +1,4 @@
-package com.slava.mymessenger;
+package com.slava.mymessenger.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.slava.mymessenger.HelpfullMethods;
+import com.slava.mymessenger.R;
 import com.slava.mymessenger.alerts.CustomErrorDialogFragment;
 
 import butterknife.ButterKnife;

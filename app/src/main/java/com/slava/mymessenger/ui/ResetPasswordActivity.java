@@ -1,4 +1,4 @@
-package com.slava.mymessenger;
+package com.slava.mymessenger.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +7,8 @@ import android.widget.EditText;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
+import com.slava.mymessenger.HelpfullMethods;
+import com.slava.mymessenger.R;
 import com.slava.mymessenger.alerts.CustomErrorDialogFragment;
 import com.slava.mymessenger.alerts.ShowToast;
 

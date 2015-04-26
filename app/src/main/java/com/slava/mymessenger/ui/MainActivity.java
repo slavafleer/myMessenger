@@ -1,4 +1,4 @@
-package com.slava.mymessenger;
+package com.slava.mymessenger.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
+import com.slava.mymessenger.R;
 import com.slava.mymessenger.alerts.ShowToast;
 
 import java.util.Locale;
@@ -160,7 +161,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0:
+                    return new TeteATeteFragment();
+                case 1:
+                    return new GroupChatFragment();
+                case 2:
+                    return new BodiesFragment();
+            }
+            return null;
         }
 
         @Override
@@ -212,7 +221,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_tete_a_tete, container, false);
             return rootView;
         }
     }
