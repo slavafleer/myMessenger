@@ -124,11 +124,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            ParseUser.logOut();
-            navigateToLogin();
+        switch (id) {
+            case R.id.action_logout:
+                ParseUser.logOut();
+                navigateToLogin();
+                break;
+            case R.id.action_edit_bodies:
+                Intent intent = new Intent(this, EditBuddiesActivity.class);
+                startActivity(intent);
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -46,6 +46,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.LoginActivity" />
         </activity>
+        <activity
+            android:name=".ui.EditBuddiesActivity"
+            android:label="@string/title_activity_edit_buddies"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.slava.mymessenger.ui.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

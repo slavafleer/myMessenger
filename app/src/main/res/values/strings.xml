@@ -3,7 +3,7 @@
 
     <string name="title_section1">Tete-A-Tete</string>
     <string name="title_section2">Group Chat</string>
-    <string name="title_section3">Bodies</string>
+    <string name="title_section3">Buddies</string>
 
     <string name="hello_world">Hello world!</string>
 
@@ -32,4 +32,6 @@
     <string name="reset_error_title">Reset Request Error</string>
     <string name="reset_no_email_error_message">Please, fill email field.</string>
     <string name="reset_success_sent_toast">Request was sent. Check the mail.</string>
+    <string name="title_activity_edit_buddies">Edit Buddies</string>
+    <string name="edit_buddies_empty_list">Add new buddy.</string>
 </resources>
