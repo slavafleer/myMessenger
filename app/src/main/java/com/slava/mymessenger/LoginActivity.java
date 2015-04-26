@@ -99,6 +99,7 @@ public class LoginActivity extends ActionBarActivity {
 
     }
 
+    //TODO: reset password by Parse.com
     @OnClick(R.id.loginForgotPasswordLauncher)
     protected void onClickForgotPassword() {
 
