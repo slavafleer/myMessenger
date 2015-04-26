@@ -26,4 +26,10 @@
     <string name="login_error_title">Login Error</string>
     <string name="welcome_text">"Welcome, "</string>
     <string name="action_logout">Logout</string>
+    <string name="title_activity_reset_password">Password Reset Request</string>
+    <string name="resetPasswordExplanationText">Please, type your email in the field.\nThe Reset Password Request Link would be sent to this mail in a few minutes.</string>
+    <string name="resetButtonLabel">Reset Password</string>
+    <string name="reset_error_title">Reset Request Error</string>
+    <string name="reset_no_email_error_message">Please, fill email field.</string>
+    <string name="reset_success_sent_toast">Request was sent. Check the mail.</string>
 </resources>

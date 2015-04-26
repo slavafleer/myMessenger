@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -23,13 +25,16 @@ public class SignupActivity extends ActionBarActivity {
     @InjectView(R.id.signupUsernameField) EditText mUsername;
     @InjectView(R.id.signupPasswordField) EditText mPassword;
     @InjectView(R.id.signupConfirmedPassword) EditText mConfirmedPassword;
-    @InjectView(R.id.signupEmailField)    EditText mEmail;
+    @InjectView(R.id.signupEmailField) EditText mEmail;
+    @InjectView(R.id.signupProgressBar) ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
+
+        mProgressBar.setVisibility(View.INVISIBLE);
         //TODO: Open keyboard automatically on username EditText
     }
 
@@ -57,6 +62,7 @@ public class SignupActivity extends ActionBarActivity {
 
     @OnClick(R.id.signupButton)
     protected void onClickSignupButton() {
+        HelpfullMethods.hideKeyboard(this);
         // trim() removes spaces before and after the string,
         // spaces between words in the string remain.
         String username = mUsername.getText().toString().trim();
@@ -84,9 +90,11 @@ public class SignupActivity extends ActionBarActivity {
             newUser.setUsername(username);
             newUser.setPassword(password);
             newUser.setEmail(email);
+            mProgressBar.setVisibility(View.VISIBLE);
             newUser.signUpInBackground(new SignUpCallback() {
                 @Override
                 public void done(ParseException e) {
+                    mProgressBar.setVisibility(View.INVISIBLE);
                     if(e == null) {
                         // Success - Start Main Activity
                         Intent intent = new Intent(SignupActivity.this, MainActivity.class);

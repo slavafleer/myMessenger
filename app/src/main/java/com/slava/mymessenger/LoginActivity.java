@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -22,6 +24,7 @@ public class LoginActivity extends ActionBarActivity {
 
     @InjectView(R.id.loginUsernameField) EditText mUsername;
     @InjectView(R.id.loginPasswordField) EditText mPassword;
+    @InjectView(R.id.loginProgressBar) ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
 
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -61,6 +65,7 @@ public class LoginActivity extends ActionBarActivity {
 
     @OnClick(R.id.loginButton)
     protected void onClickLoginButton() {
+        HelpfullMethods.hideKeyboard(this);
         String username = mUsername.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
 
@@ -73,9 +78,11 @@ public class LoginActivity extends ActionBarActivity {
             dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
         } else {
             // Log in
+            mProgressBar.setVisibility(View.VISIBLE);
             ParseUser.logInInBackground(username, password, new LogInCallback() {
                 @Override
                 public void done(ParseUser parseUser, ParseException e) {
+                    mProgressBar.setVisibility(View.INVISIBLE);
                     if(e == null) {
                         //Success - Start Main Activity
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -99,9 +106,9 @@ public class LoginActivity extends ActionBarActivity {
 
     }
 
-    //TODO: reset password by Parse.com
     @OnClick(R.id.loginForgotPasswordLauncher)
     protected void onClickForgotPassword() {
-
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
+        startActivity(intent);
     }
 }
