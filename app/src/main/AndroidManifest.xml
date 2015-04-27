@@ -62,6 +62,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.slava.mymessenger.ui.MainActivity" />
         </activity>
+        <activity
+            android:name=".ui.RecipientActivity"
+            android:label="@string/title_activity_recipient"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.slava.mymessenger.ui.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -39,4 +39,8 @@
     <string name="remove_buddy">The buddy were removed.</string>
     <string name="add_buddies">Add some buddies.</string>
     <string name="title_activity_text_message">Text Messenger</string>
+    <string name="textMessageButtonLabel">Send</string>
+    <string name="text_messenger_error_title">Text Messenger Error</string>
+    <string name="write_message_before_sending">Please write the message before sending.</string>
+    <string name="title_activity_recipient">Choose Recipients</string>
 </resources>

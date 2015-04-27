@@ -5,8 +5,10 @@ package com.slava.mymessenger;
  */
 public final class ParseConstants {
     // Class name
+    public static final String CLASS_TEXT_MESSAGES = "TextMessages";
 
     // Field names
     public static final String KEY_USERNAME = "username";
     public static final String KEY_BUDDIES_RELATION = "buddiesRelation";
+    public static final String KEY_TEXT = "Text";
 }
