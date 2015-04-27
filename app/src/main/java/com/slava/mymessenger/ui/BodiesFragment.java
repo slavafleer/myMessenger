@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -18,6 +19,9 @@ import com.slava.mymessenger.R;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by Slava on 26/04/2015.
  */
@@ -26,10 +30,14 @@ public class BodiesFragment extends ListFragment {
     protected List<ParseUser> mBodies;
     protected ParseRelation<ParseUser> mBuddiesRelation;
     protected ParseUser mCurrentUser;
+    @InjectView(R.id.fragmentBuddiesProgressBar) ProgressBar mProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_bodies, container, false);
+        // In fragments, use ButterKnife.inject(this, rootView)
+        ButterKnife.inject(this, rootView);
+        mProgressBar.setVisibility(View.INVISIBLE);
 
         return rootView;
     }
@@ -43,9 +51,11 @@ public class BodiesFragment extends ListFragment {
 
         ParseQuery<ParseUser> query = mBuddiesRelation.getQuery();
         query.addAscendingOrder(ParseConstants.KEY_USERNAME);
+        mProgressBar.setVisibility(View.VISIBLE);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> parseUsers, ParseException e) {
+                mProgressBar.setVisibility(View.INVISIBLE);
                 if (e == null) {
                     // Success
                     mBodies = parseUsers;
@@ -58,6 +68,7 @@ public class BodiesFragment extends ListFragment {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                             getListView().getContext(),
                             android.R.layout.simple_list_item_1, usernames);
+                    setListAdapter(adapter);
                 } else {
                     // Didn't worked with custom Fragment - not supported import android.support.v4.app.ListFragment;
 
