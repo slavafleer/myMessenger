@@ -37,4 +37,5 @@
     <string name="new_buddy_added">New Buddy were added</string>
     <string name="edit_buddies_error_title">Edit Buddies Error</string>
     <string name="remove_buddy">The buddy were removed.</string>
+    <string name="add_buddies">Add some buddies.</string>
 </resources>

@@ -105,7 +105,7 @@ public class EditBuddiesActivity extends ActionBarActivity {
         mBuddiesRelation = mCurrentUser.getRelation(ParseConstants.KEY_BUDDIES_RELATION);
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.orderByAscending(ParseConstants.KEY_USERNAME);
+        query.addAscendingOrder(ParseConstants.KEY_USERNAME);
         mProgressBar.setVisibility(View.VISIBLE);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
