@@ -38,4 +38,5 @@
     <string name="edit_buddies_error_title">Edit Buddies Error</string>
     <string name="remove_buddy">The buddy were removed.</string>
     <string name="add_buddies">Add some buddies.</string>
+    <string name="title_activity_text_message">Text Messenger</string>
 </resources>

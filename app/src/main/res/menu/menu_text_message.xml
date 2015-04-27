@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.slava.mymessenger.ui.TextMessageActivity">
+    <item android:id="@+id/action_send_text_message"
+          android:title="Send Message"
+          android:icon="@drawable/ic_action_send_now"
+          android:orderInCategory="100"
+          app:showAsAction="always"
+          android:visible="false"/>
+</menu>

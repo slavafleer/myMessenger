@@ -133,6 +133,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 Intent intent = new Intent(this, EditBuddiesActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.action_chat:
+                Intent intent2 = new Intent(this, TextMessageActivity.class);
+                startActivity(intent2);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
