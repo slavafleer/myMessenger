@@ -34,4 +34,7 @@
     <string name="reset_success_sent_toast">Request was sent. Check the mail.</string>
     <string name="title_activity_edit_buddies">Edit Buddies</string>
     <string name="edit_buddies_empty_list">Add new buddy.</string>
+    <string name="new_buddy_added">New Buddy were added</string>
+    <string name="edit_buddies_error_title">Edit Buddies Error</string>
+    <string name="remove_buddy">The buddy were removed.</string>
 </resources>
