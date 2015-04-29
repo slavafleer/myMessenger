@@ -43,4 +43,6 @@
     <string name="text_messenger_error_title">Text Messenger Error</string>
     <string name="write_message_before_sending">Please write the message before sending.</string>
     <string name="title_activity_recipient">Choose Recipients</string>
+    <string name="choose_at_least_one_recipient">Choose at least one recipient.</string>
+    <string name="tete_a_tete_error_title">tete-A-Tete Error</string>
 </resources>

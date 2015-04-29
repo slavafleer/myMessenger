@@ -38,6 +38,7 @@ public class RecipientActivity extends ActionBarActivity {
     @InjectView(R.id.recipientProgressBar) ProgressBar mProgressBar;
     final CustomErrorDialogFragment dialog = new CustomErrorDialogFragment();
     String mText;
+    private MenuItem sendMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class RecipientActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_recipient, menu);
+        sendMenuItem = menu.getItem(0);
         return true;
     }
 
@@ -119,26 +121,31 @@ public class RecipientActivity extends ActionBarActivity {
     public void onClickRecipientButton() {
         ParseObject textMessage = new ParseObject(ParseConstants.CLASS_TEXT_MESSAGES);
         textMessage.put(ParseConstants.KEY_TEXT, mText);
-        textMessage.put(ParseConstants.KEY_USERNAME, ParseUser.getCurrentUser().getUsername());
+        textMessage.put(ParseConstants.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
         textMessage.put(ParseConstants.KEY_SENDER_ID, ParseUser.getCurrentUser().getObjectId());
         textMessage.put(ParseConstants.KEY_RECIPIENTS_IDS,getRecipientsIds());
-        textMessage.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    ShowToast.showToast(RecipientActivity.this, "The message was sent.");
-                } else {
-                    // Show the error to an user
-                    dialog.setTitle(getString(R.string.text_messenger_error_title));
-                    // e returned with lowercase first char.
-                    // Changes it to uppercase.
-                    String message = e.getMessage();
-                    dialog.setMessage(message.substring(0, 1).toUpperCase()
-                            + message.substring(1) + ".");
-                    dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
+        if (mRecipientList.getCheckedItemCount() > 0) {
+            textMessage.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        ShowToast.showToast(RecipientActivity.this, "The message was sent.");
+                        finish();
+                    } else {
+                        // Show the error to an user
+                        dialog.setTitle(getString(R.string.text_messenger_error_title));
+                        // e returned with lowercase first char.
+                        // Changes it to uppercase.
+                        String message = e.getMessage();
+                        dialog.setMessage(message.substring(0, 1).toUpperCase()
+                                + message.substring(1) + ".");
+                        dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ShowToast.showToast(RecipientActivity.this, getString(R.string.choose_at_least_one_recipient));
+        }
     }
 
     private ArrayList<String> getRecipientsIds() {

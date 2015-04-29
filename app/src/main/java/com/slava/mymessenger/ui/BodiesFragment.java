@@ -65,6 +65,7 @@ public class BodiesFragment extends ListFragment {
                         usernames[i] = user.getUsername();
                         i++;
                     }
+                    // TODO: while quickly returning to the fragment the app crushs with java.lang.IllegalStateException: Content view not yet created
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                             getListView().getContext(),
                             android.R.layout.simple_list_item_1, usernames);
