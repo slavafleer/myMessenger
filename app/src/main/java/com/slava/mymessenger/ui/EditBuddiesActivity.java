@@ -133,10 +133,10 @@ public class EditBuddiesActivity extends ActionBarActivity {
                             + message.substring(1) + ".");
                     dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
                 }
+
+                addBuddiesCheckMarks();
             }
         });
-
-        addBuddiesCheckMarks();
     }
 
     private void addBuddiesCheckMarks() {
