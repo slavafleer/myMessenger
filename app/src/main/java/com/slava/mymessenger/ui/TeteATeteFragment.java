@@ -16,6 +16,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.slava.mymessenger.ParseConstants;
 import com.slava.mymessenger.R;
+import com.slava.mymessenger.alerts.ShowToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,11 @@ public class TeteATeteFragment extends ListFragment {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                             getListView().getContext(),
                             android.R.layout.simple_list_item_1, userNames);
-                    setListAdapter(adapter);
+                    if (getListView() != null) {
+                        setListAdapter(adapter);
+                    } else {
+                        ShowToast.showToast(getListView().getContext(), "List still not created!");
+                    }
                 } else {
                     // Didn't worked with custom Fragment - not supported import android.support.v4.app.ListFragment;
 
