@@ -16,6 +16,7 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.slava.mymessenger.ParseConstants;
 import com.slava.mymessenger.R;
+import com.slava.mymessenger.alerts.ShowToast;
 
 import java.util.List;
 
@@ -46,48 +47,52 @@ public class BodiesFragment extends ListFragment {
     public void onResume() {
         super.onResume();
 
-        mCurrentUser = ParseUser.getCurrentUser();
-        mBuddiesRelation = mCurrentUser.getRelation(ParseConstants.KEY_BUDDIES_RELATION);
+        if (getListView() != null) {
+            mCurrentUser = ParseUser.getCurrentUser();
+            mBuddiesRelation = mCurrentUser.getRelation(ParseConstants.KEY_BUDDIES_RELATION);
 
-        ParseQuery<ParseUser> query = mBuddiesRelation.getQuery();
-        query.addAscendingOrder(ParseConstants.KEY_USERNAME);
-        mProgressBar.setVisibility(View.VISIBLE);
-        query.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> parseUsers, ParseException e) {
-                mProgressBar.setVisibility(View.INVISIBLE);
-                if (e == null) {
-                    // Success
-                    mBodies = parseUsers;
-                    String[] usernames = new String[parseUsers.size()];
-                    int i = 0;
-                    for (ParseUser user : parseUsers) {
-                        usernames[i] = user.getUsername();
-                        i++;
+            ParseQuery<ParseUser> query = mBuddiesRelation.getQuery();
+            query.addAscendingOrder(ParseConstants.KEY_USERNAME);
+            mProgressBar.setVisibility(View.VISIBLE);
+            query.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List<ParseUser> parseUsers, ParseException e) {
+                    mProgressBar.setVisibility(View.INVISIBLE);
+                    if (e == null) {
+                        // Success
+                        mBodies = parseUsers;
+                        String[] usernames = new String[parseUsers.size()];
+                        int i = 0;
+                        for (ParseUser user : parseUsers) {
+                            usernames[i] = user.getUsername();
+                            i++;
+                        }
+                        // TODO: while quickly returning to the fragment the app crushs with java.lang.IllegalStateException: Content view not yet created
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                                getListView().getContext(),
+                                android.R.layout.simple_list_item_1, usernames);
+                        setListAdapter(adapter);
+                    } else {
+                        // Didn't worked with custom Fragment - not supported import android.support.v4.app.ListFragment;
+
+                        // Show the error to an user
+                        // e returned with lowercase first char.
+                        // Changes it to uppercase.
+                        String message = e.getMessage();
+                        message = (message.substring(0, 1).toUpperCase()
+                                + message.substring(1) + ".");
+                        //dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext())
+                                .setTitle(getString(R.string.edit_buddies_error_title))
+                                .setMessage(message)
+                                .setPositiveButton(android.R.string.ok, null);
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
-                    // TODO: while quickly returning to the fragment the app crushs with java.lang.IllegalStateException: Content view not yet created
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                            getListView().getContext(),
-                            android.R.layout.simple_list_item_1, usernames);
-                    setListAdapter(adapter);
-                } else {
-                    // Didn't worked with custom Fragment - not supported import android.support.v4.app.ListFragment;
-
-                    // Show the error to an user
-                    // e returned with lowercase first char.
-                    // Changes it to uppercase.
-                    String message = e.getMessage();
-                    message = (message.substring(0, 1).toUpperCase()
-                            + message.substring(1) + ".");
-                    //dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext())
-                            .setTitle(getString(R.string.edit_buddies_error_title))
-                            .setMessage(message)
-                            .setPositiveButton(android.R.string.ok, null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
                 }
-            }
-        });
+            });
+        } else {
+            ShowToast.showToast(getListView().getContext(), "The Fragment still not created!");
+        }
     }
 }
