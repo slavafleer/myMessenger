@@ -16,7 +16,6 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.slava.mymessenger.ParseConstants;
 import com.slava.mymessenger.R;
-import com.slava.mymessenger.alerts.ShowToast;
 
 import java.util.List;
 
@@ -70,11 +69,7 @@ public class BodiesFragment extends ListFragment {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                             getListView().getContext(),
                             android.R.layout.simple_list_item_1, usernames);
-                    if (getListView() != null) {
-                        setListAdapter(adapter);
-                    } else {
-                        ShowToast.showToast(getListView().getContext(), "List still not created!");
-                    }
+                    setListAdapter(adapter);
                 } else {
                     // Didn't worked with custom Fragment - not supported import android.support.v4.app.ListFragment;
 
