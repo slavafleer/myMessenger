@@ -41,7 +41,8 @@
         <activity
             android:name=".ui.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-            android:parentActivityName=".ui.LoginActivity" >
+            android:parentActivityName=".ui.LoginActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.LoginActivity" />
@@ -49,7 +50,8 @@
         <activity
             android:name=".ui.EditBuddiesActivity"
             android:label="@string/title_activity_edit_buddies"
-            android:parentActivityName=".ui.MainActivity" >
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.slava.mymessenger.ui.MainActivity" />
@@ -57,7 +59,8 @@
         <activity
             android:name=".ui.TextMessageActivity"
             android:label="@string/title_activity_text_message"
-            android:parentActivityName=".ui.MainActivity" >
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.slava.mymessenger.ui.MainActivity" />
@@ -65,7 +68,8 @@
         <activity
             android:name=".ui.RecipientActivity"
             android:label="@string/title_activity_recipient"
-            android:parentActivityName=".ui.MainActivity" >
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.slava.mymessenger.ui.MainActivity" />
