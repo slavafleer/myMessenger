@@ -1,5 +1,6 @@
 package com.slava.mymessenger.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -11,26 +12,32 @@ import android.widget.ProgressBar;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.slava.mymessenger.ParseConstants;
 import com.slava.mymessenger.R;
 import com.slava.mymessenger.alerts.CustomErrorDialogFragment;
+import com.slava.mymessenger.alerts.ShowToast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class RecipientActivity extends ActionBarActivity {
     private static final String DIALOG_ERROR_TAG = "error_dialog";
-    protected List<ParseUser> mBodies;
+    protected List<ParseUser> mBuddies;
     protected ParseRelation<ParseUser> mBuddiesRelation;
     protected ParseUser mCurrentUser;
     @InjectView(R.id.recipientList) ListView mRecipientList;
     @InjectView(R.id.recipientProgressBar) ProgressBar mProgressBar;
     final CustomErrorDialogFragment dialog = new CustomErrorDialogFragment();
+    String mText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,9 @@ public class RecipientActivity extends ActionBarActivity {
 
         mProgressBar.setVisibility(View.INVISIBLE);
         mRecipientList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        Intent intent = getIntent();
+        mText = intent.getStringExtra(TextMessageActivity.KEY_TEXT);
     }
 
     @Override
@@ -58,7 +68,7 @@ public class RecipientActivity extends ActionBarActivity {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 if (e == null) {
                     // Success
-                    mBodies = parseUsers;
+                    mBuddies = parseUsers;
                     String[] usernames = new String[parseUsers.size()];
                     int i = 0;
                     for (ParseUser user : parseUsers) {
@@ -75,7 +85,7 @@ public class RecipientActivity extends ActionBarActivity {
                     // e returned with lowercase first char.
                     // Changes it to uppercase.
                     String message = e.getMessage();
-                    dialog.setMessage(message.substring(0,1).toUpperCase()
+                    dialog.setMessage(message.substring(0, 1).toUpperCase()
                             + message.substring(1) + ".");
                     dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
                 }
@@ -103,5 +113,42 @@ public class RecipientActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.recipientButton)
+    public void onClickRecipientButton() {
+        ParseObject textMessage = new ParseObject(ParseConstants.CLASS_TEXT_MESSAGES);
+        textMessage.put(ParseConstants.KEY_TEXT, mText);
+        textMessage.put(ParseConstants.KEY_USERNAME, ParseUser.getCurrentUser().getUsername());
+        textMessage.put(ParseConstants.KEY_SENDER_ID, ParseUser.getCurrentUser().getObjectId());
+        textMessage.put(ParseConstants.KEY_RECIPIENTS_IDS,getRecipientsIds());
+        textMessage.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    ShowToast.showToast(RecipientActivity.this, "The message was sent.");
+                } else {
+                    // Show the error to an user
+                    dialog.setTitle(getString(R.string.text_messenger_error_title));
+                    // e returned with lowercase first char.
+                    // Changes it to uppercase.
+                    String message = e.getMessage();
+                    dialog.setMessage(message.substring(0, 1).toUpperCase()
+                            + message.substring(1) + ".");
+                    dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
+                }
+            }
+        });
+    }
+
+    private ArrayList<String> getRecipientsIds() {
+        ArrayList<String> recipientsIds = new ArrayList<>();
+        for(int i = 0; i < mRecipientList.getCount(); i++) {
+            if(mRecipientList.isItemChecked(i)) {
+                recipientsIds.add(mBuddies.get(i).getObjectId());
+            }
+        }
+
+        return recipientsIds;
     }
 }

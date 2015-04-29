@@ -1,21 +1,16 @@
 package com.slava.mymessenger.ui;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.SaveCallback;
-import com.slava.mymessenger.ParseConstants;
 import com.slava.mymessenger.R;
 import com.slava.mymessenger.alerts.CustomErrorDialogFragment;
-import com.slava.mymessenger.alerts.ShowToast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -23,6 +18,7 @@ import butterknife.OnClick;
 
 public class TextMessageActivity extends ActionBarActivity {
     private static final String DIALOG_ERROR_TAG = "error_dialog";
+    public static final String KEY_TEXT = "text";
     private MenuItem sendMenuItem;
     @InjectView(R.id.textMessageField) EditText mTextMessage;
     final CustomErrorDialogFragment dialog = new CustomErrorDialogFragment();
@@ -85,9 +81,8 @@ public class TextMessageActivity extends ActionBarActivity {
     @OnClick(R.id.textMessageButton)
     public void onClickTextMessageButton() {
         if(! mTextMessage.getText().toString().equals("")) {
-            // Create TextMessage ParseObject
-            //creatTextMessage();
             Intent intent = new Intent(this, RecipientActivity.class);
+            intent.putExtra(KEY_TEXT, mTextMessage.getText().toString());
             startActivity(intent);
         } else {
             // Show dialog for no text in field.
@@ -95,27 +90,5 @@ public class TextMessageActivity extends ActionBarActivity {
             dialog.setMessage(getString(R.string.write_message_before_sending));
             dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
         }
-    }
-
-    public void creatTextMessage() {
-        ParseObject textMessage = new ParseObject(ParseConstants.CLASS_TEXT_MESSAGES);
-        textMessage.put(ParseConstants.KEY_TEXT, mTextMessage.getText().toString());
-        textMessage.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    ShowToast.showToast(TextMessageActivity.this, "The message was sent.");
-                } else {
-                    // Show the error to an user
-                    dialog.setTitle(getString(R.string.text_messenger_error_title));
-                    // e returned with lowercase first char.
-                    // Changes it to uppercase.
-                    String message = e.getMessage();
-                    dialog.setMessage(message.substring(0, 1).toUpperCase()
-                            + message.substring(1) + ".");
-                    dialog.show(getFragmentManager(), DIALOG_ERROR_TAG);
-                }
-            }
-        });
     }
 }
